@@ -4,8 +4,6 @@ import { loadPortfolioRaw, normalizePortfolioTable } from "../../../lib/utils/no
 import { calculateInvestment, calculatePresentValue, calculateGainLoss, calculatePortfolioPercentage } from "../../../lib/utils/calculations";
 import { getCache, setCache } from "../../../lib/cache/simpleCache";
 import { fetchCmpBatch, fetchPeEpsAll } from "../../../lib/api/yahoo";
-import { fetchGoogleAll } from "../../../lib/api/google";
-import { isPopularSymbol } from "../../../lib/utils/popular";
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -37,38 +35,27 @@ export async function GET(req: NextRequest) {
   // Fetch live data
   const tickers = baseHoldings.map((h) => h.ticker).filter((t) => t !== "UNKNOWN");
   let cmpMap: Record<string, number | null> = {};
-  let googleMap: Record<string, { peTTM: number | null; latestEps: number | null }> = {};
+  let peeps: Record<string, { peTTM: number | null; latestEps: number | null }> = {};
   try {
     cmpMap = await fetchCmpAll(tickers, 20);
   } catch {
     cmpMap = {};
   }
   try {
-    googleMap = await fetchGoogleAll(tickers, 300);
-  } catch {
-    googleMap = {} as any;
-  }
-  // Fallback for any missing PE/EPS via Yahoo
-  const missingMetrics = tickers.filter((t) => !googleMap[t] || googleMap[t].peTTM == null || googleMap[t].latestEps == null);
-  if (missingMetrics.length) {
-    try {
-      const yahooFund = await fetchPeEpsAll(missingMetrics, 20);
-      for (const t of missingMetrics) {
-        const cur = googleMap[t] || { peTTM: null, latestEps: null };
-        const y = yahooFund[t];
-        googleMap[t] = {
-          peTTM: cur.peTTM ?? y?.peTTM ?? null,
-          latestEps: cur.latestEps ?? y?.latestEps ?? null,
-        };
-      }
-    } catch {
-      // ignore
+    // Use yahoo-finance2 to fetch fundamentals (trailing P/E and EPS)
+    const yahooFund = await fetchPeEpsAll(tickers, 20);
+    // Map to same shape expected by the rest of the code
+    for (const t of Object.keys(yahooFund)) {
+      const f = yahooFund[t];
+      peeps[t] = { peTTM: f.peTTM, latestEps: f.latestEps };
     }
+  } catch {
+    peeps = {} as any;
   }
 
   const holdings: HoldingWithLive[] = baseHoldings.map((h) => {
     const cmp: number | null = cmpMap[h.ticker] ?? null;
-    const g = googleMap[h.ticker] || { peTTM: null, latestEps: null };
+    const g = peeps[h.ticker] || { peTTM: null, latestEps: null };
     const investment = calculateInvestment(h.purchasePrice, h.quantity);
     const presentValue = calculatePresentValue(cmp, h.quantity);
     const gainLoss = calculateGainLoss(presentValue, investment);
