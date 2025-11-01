@@ -47,7 +47,7 @@ export default function Home() {
 
   // Group holdings by sector
   const holdingsBySector = useMemo(() => {
-    if (!data) return new Map<string, typeof data.holdings>();
+    if (!data) return new Map<string, PortfolioResponse['holdings']>();
     const map = new Map<string, typeof data.holdings>();
     for (const h of data.holdings) {
       const existing = map.get(h.sector) || [];
