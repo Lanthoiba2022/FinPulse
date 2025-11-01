@@ -45,7 +45,6 @@ export default function Home() {
     };
   }, []);
 
-  // Group holdings by sector
   const holdingsBySector = useMemo(() => {
     if (!data) return new Map<string, PortfolioResponse['holdings']>();
     const map = new Map<string, typeof data.holdings>();
@@ -62,14 +61,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full bg-gray-50 font-sans">
-      {/* Header */}
       <div className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-6 py-5 shadow-lg">
         <div className="mx-auto flex max-w-[1920px] items-center justify-between">
           <h1 className="text-2xl font-bold tracking-wide text-white md:text-3xl">FinPulse - Portfolio Dashboard</h1>
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="mx-auto w-full max-w-[1920px] px-6 py-8">
         {error && (
           <div className="mb-6 rounded-lg border-l-4 border-red-500 bg-red-50 p-4 text-sm text-red-800 shadow-sm">
@@ -81,14 +78,12 @@ export default function Home() {
 
         {!loading && data && (
           <>
-            {/* Status Bar */}
             <div className="mb-6 flex items-center justify-between">
               <div className="text-sm text-gray-600">
                 Last updated: {new Date(data.lastUpdated).toLocaleString()}
               </div>
             </div>
 
-            {/* Summary Cards */}
             <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
               <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
                 <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">Total Investment</div>
@@ -115,12 +110,10 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Charts */}
             <div className="mb-8">
               <Charts holdings={data.holdings} sectors={data.sectors} />
             </div>
 
-            {/* Sector Groups */}
             <div className="space-y-6">
               {sectors.map((sector) => (
                 <SectorGroup

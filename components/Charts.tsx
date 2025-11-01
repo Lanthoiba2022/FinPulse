@@ -8,7 +8,6 @@ interface ChartsProps {
   sectors: SectorGroupTotals[];
 }
 
-// Utility to generate an SVG arc path for a pie slice (solid circle)
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
   const angleRad = ((angleDeg - 90) * Math.PI) / 180;
   return { x: cx + r * Math.cos(angleRad), y: cy + r * Math.sin(angleRad) };
@@ -19,22 +18,19 @@ function describeArc(cx: number, cy: number, r: number, startAngle: number, endA
   const end = polarToCartesian(cx, cy, r, endAngle);
   const delta = endAngle - startAngle;
   const largeArcFlag = delta > 180 ? "1" : "0";
-  // Create a proper pie slice path: move to center, line to start, arc to end, close back to center
-  // Using template literal with proper formatting to avoid rounding issues
   return `M ${cx.toFixed(2)} ${cy.toFixed(2)} L ${start.x.toFixed(2)} ${start.y.toFixed(2)} A ${r.toFixed(2)} ${r.toFixed(2)} 0 ${largeArcFlag} 1 ${end.x.toFixed(2)} ${end.y.toFixed(2)} Z`;
 }
 
-// Enhanced color palette with better visual distinction
 const palette = [
-  "#3b82f6", // vibrant blue
-  "#ec4899", // pink
-  "#10b981", // emerald/green (for Banking - largest slice)
-  "#f59e0b", // amber/orange
-  "#8b5cf6", // violet/purple
-  "#ef4444", // red
-  "#06b6d4", // cyan
-  "#f97316", // orange
-  "#6366f1", // indigo
+  "#3b82f6",
+  "#ec4899",
+  "#10b981",
+  "#f59e0b",
+  "#8b5cf6",
+  "#ef4444",
+  "#06b6d4",
+  "#f97316",
+  "#6366f1",
 ];
 
 export default function Charts({ holdings, sectors }: ChartsProps) {
@@ -62,10 +58,9 @@ export default function Charts({ holdings, sectors }: ChartsProps) {
 
   const [hoveredSlice, setHoveredSlice] = useState<string | null>(null);
 
-  // Pie chart geometry (solid circle)
   const pie = useMemo(() => {
     const size = 220;
-    const r = 110; // Full radius to fill the circle completely
+    const r = 110;
     const cx = size / 2;
     const cy = size / 2;
     let currentAngle = 0;
@@ -73,9 +68,9 @@ export default function Charts({ holdings, sectors }: ChartsProps) {
     
     const slices = investmentBySector.map((d) => {
       const startAngle = currentAngle;
-      const delta = (d.percent / total) * 360; // Use actual percentage to ensure sum to 360
+      const delta = (d.percent / total) * 360;
       const endAngle = currentAngle + delta;
-      currentAngle = endAngle; // Update for next slice to ensure no gaps
+      currentAngle = endAngle;
       const path = describeArc(cx, cy, r, startAngle, endAngle);
       return { ...d, path, startAngle, endAngle };
     });
@@ -86,13 +81,11 @@ export default function Charts({ holdings, sectors }: ChartsProps) {
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-      {/* Pie: Investment by Sector */}
       <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-md transition-all hover:shadow-lg">
         <div className="mb-6">
           <h3 className="text-lg font-bold text-gray-900">Investment by Sector</h3>
         </div>
         <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8">
-          {/* Pie Chart with Tooltip */}
           <div className="relative flex-shrink-0">
             <svg 
               width={pie.size} 
@@ -123,7 +116,6 @@ export default function Charts({ holdings, sectors }: ChartsProps) {
               })}
             </svg>
             
-            {/* Centered Tooltip Overlay */}
             {hoveredData && (
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none animate-in fade-in duration-200">
                 <div className="bg-white rounded-md border border-gray-300 shadow-xl px-5 py-3 whitespace-nowrap">
@@ -135,7 +127,6 @@ export default function Charts({ holdings, sectors }: ChartsProps) {
             )}
           </div>
           
-          {/* Legend - Single Column */}
           <div className="flex-1 w-full lg:w-auto">
             <div className="space-y-2.5">
               {investmentBySector.map((d) => (
@@ -175,25 +166,24 @@ export default function Charts({ holdings, sectors }: ChartsProps) {
         </div>
       </div>
 
-      {/* Bars: Gain/Loss by Sector */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-base font-semibold text-gray-900">Gain/Loss by Sector</h3>
+      <div className="rounded-xl border border-gray-200 bg-white p-3 sm:p-6 shadow-sm transition-shadow hover:shadow-md">
+        <div className="mb-2 sm:mb-4 flex items-center justify-between">
+          <h3 className="text-xs sm:text-base font-semibold text-gray-900">Gain/Loss by Sector</h3>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-1.5 sm:space-y-3">
           {gainLossBySector.map((d) => (
-            <div key={d.sector} className="grid grid-cols-12 items-center gap-3">
-              <div className="col-span-4 truncate text-sm font-medium text-gray-700" title={d.sector}>{d.sector}</div>
+            <div key={d.sector} className="grid grid-cols-12 items-center gap-1.5 sm:gap-3">
+              <div className="col-span-4 truncate text-xs sm:text-sm font-medium text-gray-700" title={d.sector}>{d.sector}</div>
               <div className="col-span-6">
-                <div className="h-4 w-full rounded-full bg-gray-200">
+                <div className="h-2.5 sm:h-4 w-full rounded-full bg-gray-200">
                   <div
-                    className="h-4 rounded-full transition-all"
+                    className="h-2.5 sm:h-4 rounded-full transition-all"
                     style={{ width: `${d.widthPct}%`, backgroundColor: d.color }}
                     aria-hidden
                   />
                 </div>
               </div>
-              <div className="col-span-2 text-right text-sm font-semibold" style={{ color: d.text }}>
+              <div className="col-span-2 text-right text-xs sm:text-sm font-semibold" style={{ color: d.text }}>
                 {formatCurrency(d.value)}
               </div>
             </div>

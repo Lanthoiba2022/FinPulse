@@ -19,7 +19,6 @@ interface SectorGroupProps {
 export default function SectorGroup({ sector, holdings }: SectorGroupProps) {
   const [isOpen, setIsOpen] = useState(true);
 
-  // Calculate sector totals
   const totals = holdings.reduce(
     (acc, h) => ({
       investment: acc.investment + h.investment,
@@ -39,46 +38,46 @@ export default function SectorGroup({ sector, holdings }: SectorGroupProps) {
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <Card className="overflow-hidden bg-white shadow-md transition-shadow hover:shadow-lg">
         <CollapsibleTrigger className="w-full">
-          <div className="flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 sm:p-5 hover:bg-gray-50 transition-colors gap-3 sm:gap-0">
+            <div className="flex items-center gap-2 sm:gap-3">
               {isOpen ? (
-                <ChevronUp className="h-5 w-5 text-gray-500" />
+                <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 flex-shrink-0" />
               ) : (
-                <ChevronDown className="h-5 w-5 text-gray-500" />
+                <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 flex-shrink-0" />
               )}
-              <div className="text-left">
-                <h3 className="text-lg font-bold">{sector}</h3>
-                <p className="text-sm text-gray-500">
+              <div className="text-left min-w-0">
+                <h3 className="text-base sm:text-lg font-bold truncate">{sector}</h3>
+                <p className="text-xs sm:text-sm text-gray-500">
                   {holdings.length} {holdings.length === 1 ? "stock" : "stocks"}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-8 text-center">
-              <div>
-                <p className="text-xs text-gray-500 mb-1">Investment</p>
-                <p className="font-semibold font-mono text-base">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 lg:gap-8 text-left sm:text-center">
+              <div className="min-w-0">
+                <p className="text-xs sm:text-xs text-gray-500 mb-1">Investment</p>
+                <p className="font-semibold font-mono text-sm sm:text-base break-words">
                   {formatCurrency(totals.investment)}
                 </p>
               </div>
-              <div>
-                <p className="text-xs text-gray-500 mb-1">Current Value</p>
-                <p className="font-semibold font-mono text-base">
+              <div className="min-w-0">
+                <p className="text-xs sm:text-xs text-gray-500 mb-1">Current Value</p>
+                <p className="font-semibold font-mono text-sm sm:text-base break-words">
                   {formatCurrency(totals.presentValue)}
                 </p>
               </div>
-              <div className="min-w-[160px]">
-                <p className="text-xs text-gray-500 mb-1 text-center">Gain/Loss</p>
-                <div className="flex items-center gap-3 justify-center">
+              <div className="min-w-0 sm:min-w-[160px]">
+                <p className="text-xs sm:text-xs text-gray-500 mb-1 sm:text-center">Gain/Loss</p>
+                <div className="flex items-center gap-2 sm:gap-3 sm:justify-center flex-wrap">
                   <span
-                    className={`font-semibold font-mono text-base ${
+                    className={`font-semibold font-mono text-sm sm:text-base ${
                       isPositive ? "text-green-600" : "text-red-600"
                     }`}
                   >
                     {formatCurrency(totals.gainLoss)}
                   </span>
                   <span
-                    className={`text-sm font-semibold ${
+                    className={`text-xs sm:text-sm font-semibold ${
                       isPositive ? "text-green-600" : "text-red-600"
                     }`}
                   >

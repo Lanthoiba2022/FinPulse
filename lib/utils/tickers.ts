@@ -11,7 +11,6 @@ export interface DerivedTicker {
 export function deriveTicker(raw: unknown): DerivedTicker {
   if (typeof raw === "string") {
     const cleaned = raw.trim().toUpperCase();
-    // Already qualified like ABC.NS or 532174.BO
     if (/\.(NS|BO)$/.test(cleaned)) {
       return {
         ticker: cleaned,
@@ -33,7 +32,6 @@ export function deriveTicker(raw: unknown): DerivedTicker {
     }
   }
 
-  // Fallback
   return { ticker: "UNKNOWN", exchange: "UNKNOWN" };
 }
 

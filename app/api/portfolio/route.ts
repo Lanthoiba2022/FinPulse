@@ -32,7 +32,6 @@ export async function GET(req: NextRequest) {
 
   const totalInvestment = baseHoldings.reduce((sum, h) => sum + calculateInvestment(h.purchasePrice, h.quantity), 0);
 
-  // Fetch live data
   const tickers = baseHoldings.map((h) => h.ticker).filter((t) => t !== "UNKNOWN");
   let cmpMap: Record<string, number | null> = {};
   let peeps: Record<string, { peTTM: number | null; latestEps: number | null }> = {};
@@ -42,9 +41,7 @@ export async function GET(req: NextRequest) {
     cmpMap = {};
   }
   try {
-    // Use yahoo-finance2 to fetch fundamentals (trailing P/E and EPS)
     const yahooFund = await fetchPeEpsAll(tickers, 20);
-    // Map to same shape expected by the rest of the code
     for (const t of Object.keys(yahooFund)) {
       const f = yahooFund[t];
       peeps[t] = { peTTM: f.peTTM, latestEps: f.latestEps };

@@ -3,7 +3,6 @@ import React from "react";
 export default function LoadingSkeleton() {
   return (
     <div className="space-y-8 animate-pulse">
-      {/* Summary Cards Skeleton */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
         {[1, 2, 3].map((i) => (
           <div key={i} className="rounded-xl border border-gray-200 bg-white p-6">
@@ -13,7 +12,6 @@ export default function LoadingSkeleton() {
         ))}
       </div>
 
-      {/* Charts Skeleton */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="rounded-xl border border-gray-200 bg-white p-8">
           <div className="h-6 w-48 rounded bg-gray-200 mb-6" />
@@ -40,7 +38,6 @@ export default function LoadingSkeleton() {
         </div>
       </div>
 
-      {/* Sector Groups Skeleton */}
       <div className="space-y-6">
         {[1, 2, 3].map((groupIndex) => (
           <div key={groupIndex} className="rounded-xl border border-gray-200 bg-white overflow-hidden">

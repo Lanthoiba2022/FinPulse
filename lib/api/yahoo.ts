@@ -9,7 +9,6 @@ async function sleep(ms: number): Promise<void> {
 async function withRetries<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
   let attempt = 0;
   let delay = 800;
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
       return await fn();
@@ -42,7 +41,6 @@ export async function fetchCmpBatch(tickers: string[]): Promise<Record<string, n
     }
   }
   await Promise.all(Array.from({ length: Math.min(concurrency, unique.length) }, () => worker()));
-  // No HTML or direct-API fallbacks: rely on yahoo-finance2 for CMP only.
   return result;
 }
 
@@ -70,7 +68,6 @@ export async function fetchPeEpsAll(tickers: string[], batchSize = 8): Promise<R
       }
     });
     await Promise.all(promises);
-    // small delay between batches to be gentle on remote service
     if (i + batchSize < unique.length) await sleep(120);
   }
   return out;

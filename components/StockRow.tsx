@@ -11,9 +11,6 @@ interface StockRowProps {
 export default function StockRow({ stock }: StockRowProps) {
   const isPositive = stock.gainLoss >= 0;
 
-  // Format latest earnings - showing EPS or placeholder
-  // In the image it shows revenue like "₹6,586 Cr (Q3 FY24)" but we have EPS
-  // For now showing EPS formatted, or placeholder
   const latestEarnings = stock.latestEps != null
     ? `₹ ${stock.latestEps}`
     : "—";
