@@ -65,8 +65,7 @@ export default function Home() {
       {/* Header */}
       <div className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-6 py-5 shadow-lg">
         <div className="mx-auto flex max-w-[1920px] items-center justify-between">
-          <h1 className="text-2xl font-bold tracking-wide text-white md:text-3xl">FinPulse · Portfolio Dashboard</h1>
-          <div className="hidden text-sm text-white/90 md:block">Live overview of your holdings</div>
+          <h1 className="text-2xl font-bold tracking-wide text-white md:text-3xl">FinPulse - Portfolio Dashboard</h1>
         </div>
       </div>
 
@@ -78,13 +77,7 @@ export default function Home() {
           </div>
         )}
 
-        {loading && (
-          <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm">
-            <table className="min-w-full">
-              <LoadingSkeleton rows={10} cols={12} />
-            </table>
-          </div>
-        )}
+        {loading && <LoadingSkeleton />}
 
         {!loading && data && (
           <>
@@ -111,8 +104,13 @@ export default function Home() {
               </div>
               <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
                 <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">Net Gain/Loss</div>
-                <div className={`text-2xl font-bold ${data.totals.totalGainLoss > 0 ? "text-emerald-600" : data.totals.totalGainLoss < 0 ? "text-red-600" : "text-gray-900"}`}>
-                  {new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(data.totals.totalGainLoss)}
+                <div className="flex items-center gap-2">
+                  <div className={`text-2xl font-bold ${data.totals.totalGainLoss > 0 ? "text-emerald-600" : data.totals.totalGainLoss < 0 ? "text-red-600" : "text-gray-900"}`}>
+                    {new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(data.totals.totalGainLoss)}
+                  </div>
+                  <div className={`text-sm font-semibold ${data.totals.totalGainLoss > 0 ? "text-emerald-600" : data.totals.totalGainLoss < 0 ? "text-red-600" : "text-gray-900"}`}>
+                    {data.totals.totalGainLoss > 0 ? "+" : ""}{((data.totals.totalGainLoss / data.totals.totalInvestment) * 100).toFixed(2)}%
+                  </div>
                 </div>
               </div>
             </div>

@@ -15,7 +15,7 @@ export default function StockRow({ stock }: StockRowProps) {
   // In the image it shows revenue like "₹6,586 Cr (Q3 FY24)" but we have EPS
   // For now showing EPS formatted, or placeholder
   const latestEarnings = stock.latestEps != null
-    ? `₹${(stock.latestEps * 100).toLocaleString("en-IN", { maximumFractionDigits: 0 })} Cr (Q3 FY24)`
+    ? `₹${(stock.latestEps * 100).toLocaleString("en-IN", { maximumFractionDigits: 0 })} Cr`
     : "—";
 
   return (

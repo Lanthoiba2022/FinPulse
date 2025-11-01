@@ -54,7 +54,7 @@ export default function SectorGroup({ sector, holdings }: SectorGroupProps) {
               </div>
             </div>
 
-            <div className="flex items-center gap-8 text-right">
+            <div className="flex items-center gap-8 text-center">
               <div>
                 <p className="text-xs text-gray-500 mb-1">Investment</p>
                 <p className="font-semibold font-mono text-base">
@@ -68,8 +68,8 @@ export default function SectorGroup({ sector, holdings }: SectorGroupProps) {
                 </p>
               </div>
               <div className="min-w-[160px]">
-                <p className="text-xs text-gray-500 mb-1 text-right">Gain/Loss</p>
-                <div className="flex items-center gap-3 justify-end">
+                <p className="text-xs text-gray-500 mb-1 text-center">Gain/Loss</p>
+                <div className="flex items-center gap-3 justify-center">
                   <span
                     className={`font-semibold font-mono text-base ${
                       isPositive ? "text-green-600" : "text-red-600"
@@ -105,7 +105,7 @@ export default function SectorGroup({ sector, holdings }: SectorGroupProps) {
                     <th className="text-center p-3 font-medium">Exchange</th>
                     <th className="text-right p-3 font-medium">CMP</th>
                     <th className="text-right p-3 font-medium">Present Value</th>
-                    <th className="text-right p-3 font-medium">Gain/Loss</th>
+                    <th className="text-center p-3 font-medium">Gain/Loss</th>
                     <th className="text-right p-3 font-medium">P/E Ratio</th>
                     <th className="text-left p-3 font-medium">Latest Earnings</th>
                   </tr>
