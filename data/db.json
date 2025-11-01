@@ -1,0 +1,18 @@
+{
+  "holdings": [
+    { "name": "Reliance Industries", "sector": "Conglomerate", "purchasePrice": 2600, "quantity": 10, "ticker": "RELIANCE.NS" },
+    { "name": "Tata Consultancy Services", "sector": "IT Services", "purchasePrice": 3600, "quantity": 5, "ticker": "TCS.NS" },
+    { "name": "Infosys", "sector": "IT Services", "purchasePrice": 1650, "quantity": 12, "ticker": "INFY.NS" },
+    { "name": "HDFC Bank", "sector": "Banking", "purchasePrice": 1500, "quantity": 20, "ticker": "HDFCBANK.NS" },
+    { "name": "ICICI Bank", "sector": "Banking", "purchasePrice": 900, "quantity": 25, "ticker": "ICICIBANK.NS" },
+    { "name": "Axis Bank", "sector": "Banking", "purchasePrice": 1100, "quantity": 15, "ticker": "AXISBANK.NS" },
+    { "name": "State Bank of India", "sector": "Banking", "purchasePrice": 620, "quantity": 30, "ticker": "SBIN.NS" },
+    { "name": "ITC", "sector": "FMCG", "purchasePrice": 430, "quantity": 40, "ticker": "ITC.NS" },
+    { "name": "Hindustan Unilever", "sector": "FMCG", "purchasePrice": 2450, "quantity": 6, "ticker": "HINDUNILVR.NS" },
+    { "name": "Larsen & Toubro", "sector": "Engineering & Construction", "purchasePrice": 3600, "quantity": 5, "ticker": "LT.NS" },
+    { "name": "Tata Power", "sector": "Energy", "purchasePrice": 400, "quantity": 50, "ticker": "TATAPOWER.NS" },
+    { "name": "Maruti Suzuki", "sector": "Automobile", "purchasePrice": 10900, "quantity": 2, "ticker": "MARUTI.NS" },
+    { "name": "Bharti Airtel", "sector": "Telecommunications", "purchasePrice": 1180, "quantity": 10, "ticker": "BHARTIARTL.NS" },
+    { "name": "Asian Paints", "sector": "Paints & Coatings", "purchasePrice": 2900, "quantity": 4, "ticker": "ASIANPAINT.NS" }
+  ]
+}

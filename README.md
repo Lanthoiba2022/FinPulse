@@ -35,3 +35,22 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 # FinPulse
+
+## Running locally
+
+1. Install dependencies
+2. Start dev server: `npm run dev`
+
+## Data source
+
+- The app reads `finpulse/portfolioTable.json` (provided) and normalizes it.
+- Live CMP from Yahoo (yahoo-finance2); P/E and latest EPS scraped from Google Finance (hl=en, gl=IN).
+
+## API routes
+
+- `GET /api/health` — service status
+- `GET /api/portfolio` — normalized portfolio with live data; cached 15s
+
+## Notes
+
+- Educational/demo purposes only. Unofficial data sources may break without notice.
